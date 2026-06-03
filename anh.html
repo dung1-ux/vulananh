@@ -26,8 +26,9 @@ body{
     padding:10px;
     border-radius:8px;
     box-shadow:0 10px 25px rgba(0,0,0,.3);
-    transition:.5s;
+    transition:.2s;
     z-index:1;
+    cursor:grab;
 }
 
 .photo img{
@@ -99,29 +100,58 @@ body{
 <body>
 
 <div class="photo p1">
-    <img src="./image1.png">
+    <img src="img/image1.png">
 </div>
 
 <div class="photo p2">
-    <img src="./image2.png">
+    <img src="img/image2.png">
 </div>
 
 <div class="photo p3">
-    <img src="./image3.png">
+    <img src="img/image3.png">
 </div>
 
 <div class="photo p4">
-    <img src="./image4.png">
+    <img src="img/image4.png">
 </div>
 
 <div class="photo p5">
-    <img src="./image5.png">
+    <img src="img/image5.png">
 </div>
 <div class="photo p6">
-    <img src="./image.png">
+    <img src="img/image.png">
 </div>
 
 
+<script>
+const photos = document.querySelectorAll(".photo");
 
+photos.forEach(photo => {
+    let isDragging = false;
+    let offsetX, offsetY;
+
+    photo.addEventListener("mousedown", (e) => {
+        isDragging = true;
+
+        offsetX = e.clientX - photo.offsetLeft;
+        offsetY = e.clientY - photo.offsetTop;
+
+        photo.style.zIndex = 9999;
+        photo.style.cursor = "grabbing";
+    });
+
+    document.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+
+        photo.style.left = (e.clientX - offsetX) + "px";
+        photo.style.top = (e.clientY - offsetY) + "px";
+    });
+
+    document.addEventListener("mouseup", () => {
+        isDragging = false;
+        photo.style.cursor = "grab";
+    });
+});
+</script>
 </body>
 </html>
