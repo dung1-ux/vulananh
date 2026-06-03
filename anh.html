@@ -26,9 +26,9 @@ body{
     padding:10px;
     border-radius:8px;
     box-shadow:0 10px 25px rgba(0,0,0,.3);
-    transition:.2s;
     z-index:1;
     cursor:grab;
+    user-select:none;
 }
 
 .photo img{
@@ -38,7 +38,7 @@ body{
 }
 
 .photo:hover{
-    transform:scale(1.1) rotate(0deg) !important;
+    transform:scale(1.1) rotate(0deg) ;
     z-index:999;
 }
 
@@ -125,33 +125,45 @@ body{
 
 <script>
 const photos = document.querySelectorAll(".photo");
+let highestZ = 1000;
 
 photos.forEach(photo => {
-    let isDragging = false;
-    let offsetX, offsetY;
 
-    photo.addEventListener("mousedown", (e) => {
-        isDragging = true;
+    photo.addEventListener("mousedown", function(e) {
 
-        offsetX = e.clientX - photo.offsetLeft;
-        offsetY = e.clientY - photo.offsetTop;
+        let rect = photo.getBoundingClientRect();
 
-        photo.style.zIndex = 9999;
-        photo.style.cursor = "grabbing";
+        photo.style.left = rect.left + "px";
+        photo.style.top = rect.top + "px";
+        photo.style.right = "auto";
+        photo.style.bottom = "auto";
+
+        const shiftX = e.clientX - rect.left;
+        const shiftY = e.clientY - rect.top;
+
+        highestZ++;
+        photo.style.zIndex = highestZ;
+
+        function moveAt(pageX, pageY) {
+            photo.style.left = pageX - shiftX + "px";
+            photo.style.top = pageY - shiftY + "px";
+        }
+
+        function onMouseMove(e) {
+            moveAt(e.pageX, e.pageY);
+        }
+
+        document.addEventListener("mousemove", onMouseMove);
+
+        document.addEventListener("mouseup", function stopDrag() {
+            document.removeEventListener("mousemove", onMouseMove);
+            document.removeEventListener("mouseup", stopDrag);
+        });
     });
 
-    document.addEventListener("mousemove", (e) => {
-        if (!isDragging) return;
-
-        photo.style.left = (e.clientX - offsetX) + "px";
-        photo.style.top = (e.clientY - offsetY) + "px";
-    });
-
-    document.addEventListener("mouseup", () => {
-        isDragging = false;
-        photo.style.cursor = "grab";
-    });
+    photo.ondragstart = () => false;
 });
+</script>
 </script>
 </body>
 </html>
