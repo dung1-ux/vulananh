@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday My Love ❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+    overflow:hidden;
+}
+
+/* CARD */
+.card{
+    width:380px;
+    background:white;
+    border-radius:20px;
+    padding:30px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    position:relative;
+    z-index:2;
+    animation:fadeIn 1.5s ease;
+}
+
+h1{
+    color:#ff4d6d;
+    margin-bottom:15px;
+}
+
+.message{
+    color:#555;
+    line-height:1.8;
+    font-size:17px;
+}
+
+.love{
+    margin-top:20px;
+    font-size:22px;
+    color:#ff4d6d;
+    font-weight:bold;
+}
+
+/* NÚT NEXT */
+.next-btn{
+    margin-top:20px;
+    padding:12px 30px;
+    border:none;
+    border-radius:50px;
+    background:#ff4d6d;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+
+    opacity:0;
+    transform:translateY(20px);
+    transition:0.6s;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+.next-btn.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.next-btn:hover{
+    transform:scale(1.08);
+    background:#ff2f55;
+}
+
+/* HEARTS */
+.heart{
+    position:absolute;
+    color:rgba(255,255,255,0.8);
+    animation:float 6s linear infinite;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(100vh) scale(0);
+    }
+    to{
+        transform:translateY(-100px) scale(1.5);
+    }
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>🎂 Happy Birthday Babe ❤️</h1>
+
+    <div class="message">
+        Chúc em có một ngày sinh nhật thật hạnh phúc,
+        luôn vui vẻ, xinh đẹp và đạt được mọi điều em mong muốn.
+        Cảm ơn em đã đến bên anh và làm cho cuộc sống của anh trở nên ý nghĩa hơn mỗi ngày.
+        <br><br>
+        Mong rằng chúng ta sẽ cùng nhau tạo nên thật nhiều kỷ niệm đẹp trong tương lai.
+    </div>
+
+    <div class="love">
+        Anh yêu em rất nhiều ❤️
+    </div>
+
+    <!-- NÚT -->
+    <button id="nextBtn" class="next-btn">
+        Tiếp Theo ➜
+    </button>
+
+</div>
+
+<script>
+
+/* TIM BAY */
+function createHeart(){
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 25 + 15) + "px";
+    heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 7000);
+}
+
+setInterval(createHeart, 300);
+
+/* NÚT NEXT */
+const nextBtn = document.getElementById("nextBtn");
+
+setTimeout(() => {
+    nextBtn.classList.add("show");
+}, 2000);
+
+nextBtn.addEventListener("click", () => {
+    window.location.href = "anh.html"; // 👉 đổi tên trang tại đây
+});
+
+</script>
+
+</body>
+</html>
